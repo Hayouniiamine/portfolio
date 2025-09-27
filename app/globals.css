@@ -1,0 +1,557 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 15 23 42;
+    --foreground: 248 250 252;
+    --card: 30 41 59;
+    --card-foreground: 248 250 252;
+    --popover: 30 41 59;
+    --popover-foreground: 248 250 252;
+    --primary: 16 185 129;
+    --primary-foreground: 15 23 42;
+    --secondary: 51 65 85;
+    --secondary-foreground: 248 250 252;
+    --muted: 51 65 85;
+    --muted-foreground: 148 163 184;
+    --accent: 51 65 85;
+    --accent-foreground: 248 250 252;
+    --destructive: 239 68 68;
+    --destructive-foreground: 248 250 252;
+    --border: 51 65 85;
+    --input: 51 65 85;
+    --ring: 16 185 129;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 15 23 42;
+    --foreground: 248 250 252;
+    --card: 30 41 59;
+    --card-foreground: 248 250 252;
+    --popover: 30 41 59;
+    --popover-foreground: 248 250 252;
+    --primary: 16 185 129;
+    --primary-foreground: 15 23 42;
+    --secondary: 51 65 85;
+    --secondary-foreground: 248 250 252;
+    --muted: 51 65 85;
+    --muted-foreground: 148 163 184;
+    --accent: 51 65 85;
+    --accent-foreground: 248 250 252;
+    --destructive: 239 68 68;
+    --destructive-foreground: 248 250 252;
+    --border: 51 65 85;
+    --input: 51 65 85;
+    --ring: 16 185 129;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Enhanced RTL Support for Arabic */
+[dir="rtl"] {
+  text-align: right;
+  direction: rtl;
+}
+
+[dir="rtl"] body {
+  direction: rtl;
+}
+
+/* Fix flex directions for RTL */
+[dir="rtl"] .flex:not(.flex-col):not(.flex-row) {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .flex-row {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .flex-col {
+  flex-direction: column;
+}
+
+/* Fix spacing for RTL */
+[dir="rtl"] .space-x-2 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 1;
+  margin-right: calc(0.5rem * var(--tw-space-x-reverse));
+  margin-left: calc(0.5rem * calc(1 - var(--tw-space-x-reverse)));
+}
+
+[dir="rtl"] .space-x-4 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 1;
+  margin-right: calc(1rem * var(--tw-space-x-reverse));
+  margin-left: calc(1rem * calc(1 - var(--tw-space-x-reverse)));
+}
+
+[dir="rtl"] .space-x-6 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 1;
+  margin-right: calc(1.5rem * var(--tw-space-x-reverse));
+  margin-left: calc(1.5rem * calc(1 - var(--tw-space-x-reverse)));
+}
+
+[dir="rtl"] .space-x-8 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 1;
+  margin-right: calc(2rem * var(--tw-space-x-reverse));
+  margin-left: calc(2rem * calc(1 - var(--tw-space-x-reverse)));
+}
+
+/* Fix margins for RTL */
+[dir="rtl"] .ml-2 {
+  margin-left: 0;
+  margin-right: 0.5rem;
+}
+
+[dir="rtl"] .ml-auto {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+[dir="rtl"] .mr-2 {
+  margin-right: 0;
+  margin-left: 0.5rem;
+}
+
+[dir="rtl"] .mr-3 {
+  margin-right: 0;
+  margin-left: 0.75rem;
+}
+
+[dir="rtl"] .mr-4 {
+  margin-right: 0;
+  margin-left: 1rem;
+}
+
+[dir="rtl"] .mr-6 {
+  margin-right: 0;
+  margin-left: 1.5rem;
+}
+
+[dir="rtl"] .mr-8 {
+  margin-right: 0;
+  margin-left: 2rem;
+}
+
+/* Fix padding for RTL */
+[dir="rtl"] .pl-8 {
+  padding-left: 0;
+  padding-right: 2rem;
+}
+
+[dir="rtl"] .pr-8 {
+  padding-right: 0;
+  padding-left: 2rem;
+}
+
+[dir="rtl"] .pl-4 {
+  padding-left: 0;
+  padding-right: 1rem;
+}
+
+[dir="rtl"] .pr-4 {
+  padding-right: 0;
+  padding-left: 1rem;
+}
+
+/* Fix text alignment */
+[dir="rtl"] .text-left {
+  text-align: right;
+}
+
+[dir="rtl"] .text-right {
+  text-align: left;
+}
+
+/* Fix justify content */
+[dir="rtl"] .justify-start {
+  justify-content: flex-end;
+}
+
+[dir="rtl"] .justify-end {
+  justify-content: flex-start;
+}
+
+[dir="rtl"] .justify-between {
+  justify-content: space-between;
+}
+
+/* Fix items alignment */
+[dir="rtl"] .items-start {
+  align-items: flex-start;
+}
+
+[dir="rtl"] .items-end {
+  align-items: flex-end;
+}
+
+/* Fix positioning */
+[dir="rtl"] .left-0 {
+  left: auto;
+  right: 0;
+}
+
+[dir="rtl"] .right-0 {
+  right: auto;
+  left: 0;
+}
+
+[dir="rtl"] .right-1 {
+  right: auto;
+  left: 0.25rem;
+}
+
+[dir="rtl"] .right-3 {
+  right: auto;
+  left: 0.75rem;
+}
+
+/* Fix transforms */
+[dir="rtl"] .translate-x-2 {
+  transform: translateX(-0.5rem);
+}
+
+[dir="rtl"] .-translate-x-1\/2 {
+  transform: translateX(50%);
+}
+
+/* Fix gradients and borders */
+[dir="rtl"] .border-l {
+  border-left: 0;
+  border-right: 1px solid;
+}
+
+[dir="rtl"] .border-r {
+  border-right: 0;
+  border-left: 1px solid;
+}
+
+/* Arabic font improvements */
+[dir="rtl"] * {
+  font-family: "Cairo", "Amiri", "Noto Sans Arabic", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+[dir="rtl"] h1,
+[dir="rtl"] h2,
+[dir="rtl"] h3,
+[dir="rtl"] h4,
+[dir="rtl"] h5,
+[dir="rtl"] h6 {
+  font-weight: 600;
+  line-height: 1.4;
+  font-family: "Cairo", "Amiri", "Noto Sans Arabic", sans-serif;
+}
+
+/* Ensure Arabic text renders properly */
+[dir="rtl"] .gradient-text {
+  background: linear-gradient(-45deg, #10b981, #06b6d4, #8b5cf6, #f59e0b);
+  background-size: 400% 400%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient 3s ease infinite;
+  font-family: "Cairo", "Amiri", "Noto Sans Arabic", sans-serif;
+  font-weight: 700;
+}
+
+/* Fix Arabic name display */
+[dir="rtl"] .hero-name {
+  font-family: "Cairo", "Amiri", "Noto Sans Arabic", sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  word-spacing: 0.1em;
+  text-align: center;
+  margin-bottom: 2rem !important;
+}
+
+[dir="rtl"] .hero-tagline {
+  margin-bottom: 2rem !important;
+}
+
+/* Fix social media icons spacing for RTL */
+[dir="rtl"] .flex.justify-center.space-x-6 {
+  direction: ltr;
+  flex-direction: row;
+}
+
+[dir="rtl"] .space-x-reverse > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 1;
+  margin-right: calc(1.5rem * var(--tw-space-x-reverse));
+  margin-left: calc(1.5rem * calc(1 - var(--tw-space-x-reverse)));
+}
+
+/* Fix button alignment for Arabic */
+[dir="rtl"] .sm\\:flex-row-reverse {
+  flex-direction: row-reverse;
+}
+
+/* Better spacing for Arabic hero section */
+[dir="rtl"] .hero-section .mb-6 {
+  margin-bottom: 2rem;
+}
+
+[dir="rtl"] .hero-section .mb-8 {
+  margin-bottom: 2.5rem;
+}
+
+/* Fix location icon alignment */
+[dir="rtl"] .flex.items-center.justify-center {
+  direction: ltr;
+}
+
+[dir="rtl"] .flex.items-center.justify-center .mr-2 {
+  margin-right: 0;
+  margin-left: 0.5rem;
+}
+
+[dir="rtl"] .text-sm {
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+[dir="rtl"] .text-base {
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+[dir="rtl"] .text-lg {
+  font-size: 1.125rem;
+  line-height: 1.8;
+}
+
+[dir="rtl"] .text-xl {
+  font-size: 1.25rem;
+  line-height: 1.8;
+}
+
+/* Fix card layouts for RTL */
+[dir="rtl"] .grid {
+  direction: rtl;
+}
+
+[dir="rtl"] .flex.items-center {
+  direction: rtl;
+}
+
+/* Fix button layouts */
+[dir="rtl"] .flex.space-x-4 {
+  direction: rtl;
+}
+
+/* Fix navigation for RTL */
+[dir="rtl"] nav .flex {
+  direction: rtl;
+}
+
+[dir="rtl"] .hidden.md\\:flex {
+  direction: rtl;
+}
+
+/* Fix mobile menu for RTL */
+[dir="rtl"] .md\\:hidden .space-y-2 button {
+  text-align: right;
+  padding-right: 1rem;
+  padding-left: 1rem;
+}
+
+/* Fix dropdown menus for RTL */
+[dir="rtl"] .dropdown-menu {
+  direction: rtl;
+  text-align: right;
+}
+
+/* Fix form elements for RTL */
+[dir="rtl"] input,
+[dir="rtl"] textarea,
+[dir="rtl"] select {
+  text-align: right;
+  direction: rtl;
+}
+
+[dir="rtl"] input::placeholder,
+[dir="rtl"] textarea::placeholder {
+  text-align: right;
+}
+
+/* Fix list items for RTL */
+[dir="rtl"] ul,
+[dir="rtl"] ol {
+  direction: rtl;
+  text-align: right;
+}
+
+[dir="rtl"] li {
+  text-align: right;
+}
+
+/* Fix absolute positioning for RTL */
+[dir="rtl"] .absolute.-bottom-2 {
+  left: auto;
+  right: 0;
+}
+
+[dir="rtl"] .absolute.-bottom-1 {
+  left: auto;
+  right: 0;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-slate-800;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-600 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-slate-500;
+}
+
+/* Custom Animations */
+@keyframes gradient {
+  0%,
+  100% {
+    background-size: 200% 200%;
+    background-position: left center;
+  }
+  50% {
+    background-size: 200% 200%;
+    background-position: right center;
+  }
+}
+
+@keyframes scale-x {
+  0% {
+    transform: scaleX(0);
+  }
+  100% {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes glow {
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(16, 185, 129, 0.6);
+  }
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient 3s ease infinite;
+}
+
+.animate-scale-x {
+  animation: scale-x 1s ease-out 1s forwards;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-glow {
+  animation: glow 2s ease-in-out infinite;
+}
+
+/* Hover effects */
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* Gradient text animation */
+.gradient-text {
+  background: linear-gradient(-45deg, #10b981, #06b6d4, #8b5cf6, #f59e0b);
+  background-size: 400% 400%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient 3s ease infinite;
+}
+
+/* Matrix-like background effect */
+.matrix-bg {
+  background-image: radial-gradient(circle at 25% 25%, rgba(16, 185, 129, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(6, 182, 212, 0.1) 0%, transparent 50%);
+}
+
+/* Language selector styling */
+.language-selector {
+  position: relative;
+}
+
+.language-selector::before {
+  content: "🌐";
+  position: absolute;
+  left: -24px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 14px;
+}
+
+[dir="rtl"] .language-selector::before {
+  left: auto;
+  right: -24px;
+}
+
+/* Video container styling */
+.video-container {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  overflow: hidden;
+  border-radius: 0.5rem;
+}
+
+.video-container video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 0.5rem;
+}
