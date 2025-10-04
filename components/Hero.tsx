@@ -40,7 +40,6 @@ export default function Hero() {
       }
     };
 
-    // Listen for storage changes and language changes
     window.addEventListener("storage", updateContent);
     window.addEventListener("contentUpdated", updateContent);
 
@@ -80,6 +79,7 @@ export default function Hero() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
         <div className="text-center">
+          {/* Profile Image */}
           <div
             className={`mb-8 transform transition-all duration-1000 ${
               isVisible
@@ -100,6 +100,7 @@ export default function Hero() {
             </div>
           </div>
 
+          {/* Name */}
           <div
             className={`transform transition-all duration-1000 delay-300 ${
               isVisible
@@ -116,6 +117,7 @@ export default function Hero() {
             </h1>
           </div>
 
+          {/* Tagline */}
           <div
             className={`transform transition-all duration-1000 delay-500 ${
               isVisible
@@ -135,6 +137,7 @@ export default function Hero() {
             </div>
           </div>
 
+          {/* Location */}
           <div
             className={`flex items-center justify-center text-slate-400 mb-8 transform transition-all duration-1000 delay-700 ${
               isVisible
@@ -146,6 +149,7 @@ export default function Hero() {
             <span>{content?.personalInfo.location || t("location")}</span>
           </div>
 
+          {/* Description */}
           <div
             className={`transform transition-all duration-1000 delay-900 ${
               isVisible
@@ -158,6 +162,7 @@ export default function Hero() {
             </p>
           </div>
 
+          {/* Action Buttons */}
           <div
             className={`flex flex-col sm:flex-row gap-4 justify-center items-center mb-8 transform transition-all duration-1000 delay-1100 ${
               isVisible
@@ -183,6 +188,7 @@ export default function Hero() {
             </Button>
           </div>
 
+          {/* Social Links */}
           <div
             className={`flex justify-center space-x-6 transform transition-all duration-1000 delay-1300 ${
               isVisible
@@ -190,38 +196,48 @@ export default function Hero() {
                 : "translate-y-10 opacity-0"
             } ${language === "ar" ? "space-x-reverse" : ""}`}
           >
+            {/* Email */}
             <a
-              href={`mailto:${
-                content?.personalInfo.email || "hayouniamine11@gmail.com"
-              }`}
-              onClick={() => analytics?.trackButtonClick("hero-email")}
-              className="p-3 rounded-full bg-slate-800 shadow-lg text-slate-400 hover:text-emerald-400 hover:shadow-xl transform hover:scale-110 transition-all duration-300 border border-slate-700 hover:border-emerald-400/50"
-              target="_blank"
-              rel="noopener noreferrer"
+              onClick={() => {
+                analytics?.trackButtonClick("hero-email");
+                window.open(
+                  `mailto:${content?.personalInfo.email || "hayouniamine11@gmail.com"}`,
+                  "_blank",
+                  "noopener,noreferrer"
+                );
+              }}
+              className="p-3 rounded-full bg-slate-800 shadow-lg text-slate-400 hover:text-emerald-400 hover:shadow-xl transform hover:scale-110 transition-all duration-300 border border-slate-700 hover:border-emerald-400/50 cursor-pointer"
             >
               <Mail className="w-6 h-6" />
             </a>
+
+            {/* GitHub */}
             <a
-              href={
-                content?.personalInfo.github ||
-                "https://github.com/Hayouniiamine"
-              }
-              onClick={() => analytics?.trackButtonClick("hero-github")}
-              className="p-3 rounded-full bg-slate-800 shadow-lg text-slate-400 hover:text-emerald-400 hover:shadow-xl transform hover:scale-110 transition-all duration-300 border border-slate-700 hover:border-emerald-400/50"
-              target="_blank"
-              rel="noopener noreferrer"
+              onClick={() => {
+                analytics?.trackButtonClick("hero-github");
+                window.open(
+                  content?.personalInfo.github || "https://github.com/Hayouniiamine",
+                  "_blank",
+                  "noopener,noreferrer"
+                );
+              }}
+              className="p-3 rounded-full bg-slate-800 shadow-lg text-slate-400 hover:text-emerald-400 hover:shadow-xl transform hover:scale-110 transition-all duration-300 border border-slate-700 hover:border-emerald-400/50 cursor-pointer"
             >
               <Github className="w-6 h-6" />
             </a>
+
+            {/* LinkedIn */}
             <a
-              href={
-                content?.personalInfo.linkedin ||
-                "https://www.linkedin.com/in/amin-hayouni-419482351/"
-              }
-              onClick={() => analytics?.trackButtonClick("hero-linkedin")}
-              className="p-3 rounded-full bg-slate-800 shadow-lg text-slate-400 hover:text-emerald-400 hover:shadow-xl transform hover:scale-110 transition-all duration-300 border border-slate-700 hover:border-emerald-400/50"
-              target="_blank"
-              rel="noopener noreferrer"
+              onClick={() => {
+                analytics?.trackButtonClick("hero-linkedin");
+                window.open(
+                  content?.personalInfo.linkedin ||
+                    "https://www.linkedin.com/in/amin-hayouni-419482351/",
+                  "_blank",
+                  "noopener,noreferrer"
+                );
+              }}
+              className="p-3 rounded-full bg-slate-800 shadow-lg text-slate-400 hover:text-emerald-400 hover:shadow-xl transform hover:scale-110 transition-all duration-300 border border-slate-700 hover:border-emerald-400/50 cursor-pointer"
             >
               <Linkedin className="w-6 h-6" />
             </a>
