@@ -48,15 +48,29 @@ export default function Projects() {
     analytics?.trackButtonClick(`project-${type}-${projectKey}`)
   }
 
-  const isYouTubeUrl = (url: string) => {
-    return url.includes("youtube.com") || url.includes("youtu.be")
-  }
+  // Detect video platform and return an embeddable URL
+  const getEmbedUrl = (url: string) => {
+    if (url.includes("youtube.com") || url.includes("youtu.be")) {
+      const videoId = url.includes("youtu.be")
+        ? url.split("youtu.be/")[1]?.split("?")[0]
+        : url.split("v=")[1]?.split("&")[0]
+      return `https://www.youtube.com/embed/${videoId}`
+    }
 
-  const getYouTubeEmbedUrl = (url: string) => {
-    const videoId = url.includes("youtu.be")
-      ? url.split("youtu.be/")[1]?.split("?")[0]
-      : url.split("v=")[1]?.split("&")[0]
-    return `https://www.youtube.com/embed/${videoId}`
+    if (url.includes("vimeo.com")) {
+      const videoId = url.split("vimeo.com/")[1]?.split("?")[0]
+      return `https://player.vimeo.com/video/${videoId}`
+    }
+
+    if (url.includes("dailymotion.com") || url.includes("dai.ly")) {
+      const videoId = url.includes("dai.ly")
+        ? url.split("dai.ly/")[1]?.split("?")[0]
+        : url.split("video/")[1]?.split("?")[0]
+      return `https://www.dailymotion.com/embed/video/${videoId}`
+    }
+
+    // For direct video file URLs (.mp4, .webm, etc.)
+    return null
   }
 
   return (
@@ -115,15 +129,20 @@ export default function Projects() {
                 {project.video && (
                   <div className="mb-6">
                     <div className="video-container bg-slate-800 rounded-lg overflow-hidden">
-                      {isYouTubeUrl(project.video) ? (
+                      {getEmbedUrl(project.video) ? (
                         <iframe
-                          src={getYouTubeEmbedUrl(project.video)}
+                          src={getEmbedUrl(project.video)!}
                           title={`${project.title} Demo`}
                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                           allowFullScreen
+                          className="w-full h-64"
                         />
                       ) : (
-                        <video controls preload="metadata" className="w-full h-full object-cover">
+                        <video
+                          controls
+                          preload="metadata"
+                          className="w-full h-64 object-cover rounded-lg"
+                        >
                           <source src={project.video} type="video/mp4" />
                           Your browser does not support the video tag.
                         </video>
