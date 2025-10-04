@@ -48,7 +48,7 @@ export default function Projects() {
     analytics?.trackButtonClick(`project-${type}-${projectKey}`)
   }
 
-  // Detect video platform and return an embeddable URL
+  // ✅ Detect video platform (YouTube, Vimeo, Dailymotion, Jumpshare, or direct link)
   const getEmbedUrl = (url: string) => {
     if (url.includes("youtube.com") || url.includes("youtu.be")) {
       const videoId = url.includes("youtu.be")
@@ -67,6 +67,12 @@ export default function Projects() {
         ? url.split("dai.ly/")[1]?.split("?")[0]
         : url.split("video/")[1]?.split("?")[0]
       return `https://www.dailymotion.com/embed/video/${videoId}`
+    }
+
+    // ✅ NEW: Jumpshare support
+    if (url.includes("jumpshare.com/share/")) {
+      const videoId = url.split("jumpshare.com/share/")[1]?.split("?")[0]
+      return `https://jumpshare.com/embed/${videoId}`
     }
 
     // For direct video file URLs (.mp4, .webm, etc.)
@@ -116,16 +122,20 @@ export default function Projects() {
                   >
                     {iconMap[project.icon as keyof typeof iconMap] || <Code className="w-6 h-6" />}
                   </div>
-                  <span className="text-sm text-slate-400 bg-slate-600 px-3 py-1 rounded-full">{project.period}</span>
+                  <span className="text-sm text-slate-400 bg-slate-600 px-3 py-1 rounded-full">
+                    {project.period}
+                  </span>
                 </div>
                 <CardTitle className="text-xl font-bold text-white group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:bg-clip-text group-hover:from-emerald-400 group-hover:to-cyan-400 transition-all duration-300">
                   {project.title}
                 </CardTitle>
-                <CardDescription className="text-slate-300 leading-relaxed">{project.description}</CardDescription>
+                <CardDescription className="text-slate-300 leading-relaxed">
+                  {project.description}
+                </CardDescription>
               </CardHeader>
 
               <CardContent className="relative z-10">
-                {/* Video Section */}
+                {/* ✅ Video Section with Jumpshare Support */}
                 {project.video && (
                   <div className="mb-6">
                     <div className="video-container bg-slate-800 rounded-lg overflow-hidden">
@@ -138,11 +148,7 @@ export default function Projects() {
                           className="w-full h-64"
                         />
                       ) : (
-                        <video
-                          controls
-                          preload="metadata"
-                          className="w-full h-64 object-cover rounded-lg"
-                        >
+                        <video controls preload="metadata" className="w-full h-64 object-cover rounded-lg">
                           <source src={project.video} type="video/mp4" />
                           Your browser does not support the video tag.
                         </video>
