@@ -55,11 +55,9 @@ export default function Hero() {
     }
   };
 
-  // Compute URLs safely with fallbacks
+  // Precompute URLs to ensure they are valid even if content is not yet loaded
   const githubUrl = content?.personalInfo.github?.trim() || "https://github.com/Hayouniiamine";
-  const linkedinUrl =
-    content?.personalInfo.linkedin?.trim() ||
-    "https://www.linkedin.com/in/amin-hayouni-419482351/";
+  const linkedinUrl = content?.personalInfo.linkedin?.trim() || "https://www.linkedin.com/in/amin-hayouni-419482351/";
   const emailUrl = `mailto:${content?.personalInfo.email?.trim() || "hayouniamine11@gmail.com"}`;
 
   return (
@@ -67,7 +65,7 @@ export default function Hero() {
       id="hero"
       className="pt-16 min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-emerald-900/20"
     >
-      {/* Animated Background */}
+      {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-emerald-400/10 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-cyan-400/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
@@ -125,9 +123,7 @@ export default function Hero() {
             }`}
           >
             <div
-              className={`relative inline-block ${
-                language === "ar" ? "mb-8" : "mb-6"
-              }`}
+              className={`relative inline-block ${language === "ar" ? "mb-8" : "mb-6"}`}
             >
               <p className="text-xl md:text-2xl text-emerald-300 font-medium">
                 {content?.personalInfo.tagline || t("tagline")}
@@ -215,4 +211,13 @@ export default function Hero() {
                 analytics?.trackButtonClick("hero-linkedin");
                 window.open(linkedinUrl, "_blank", "noopener,noreferrer");
               }}
-              className="p-3 rounded-full bg-slate-800 shadow-lg text-slate-
+              className="p-3 rounded-full bg-slate-800 shadow-lg text-slate-400 hover:text-emerald-400 hover:shadow-xl transform hover:scale-110 transition-all duration-300 border border-slate-700 hover:border-emerald-400/50 cursor-pointer"
+            >
+              <Linkedin className="w-6 h-6" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
