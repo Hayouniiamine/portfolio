@@ -26,13 +26,11 @@ export default function Hero() {
     setIsVisible(true);
     analytics?.trackSectionView("hero");
 
-    // Initialize content
     const manager = contentManager;
     if (manager) {
       setContent(manager.getContent(language));
     }
 
-    // Update content when it changes
     const updateContent = () => {
       const manager = contentManager;
       if (manager) {
@@ -57,12 +55,19 @@ export default function Hero() {
     }
   };
 
+  // Compute URLs safely with fallbacks
+  const githubUrl = content?.personalInfo.github?.trim() || "https://github.com/Hayouniiamine";
+  const linkedinUrl =
+    content?.personalInfo.linkedin?.trim() ||
+    "https://www.linkedin.com/in/amin-hayouni-419482351/";
+  const emailUrl = `mailto:${content?.personalInfo.email?.trim() || "hayouniamine11@gmail.com"}`;
+
   return (
     <section
       id="hero"
       className="pt-16 min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-emerald-900/20"
     >
-      {/* Animated Background Elements */}
+      {/* Animated Background */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-emerald-400/10 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-cyan-400/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
@@ -82,9 +87,7 @@ export default function Hero() {
           {/* Profile Image */}
           <div
             className={`mb-8 transform transition-all duration-1000 ${
-              isVisible
-                ? "translate-y-0 opacity-100"
-                : "translate-y-10 opacity-0"
+              isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
             }`}
           >
             <div className="relative inline-block">
@@ -103,9 +106,7 @@ export default function Hero() {
           {/* Name */}
           <div
             className={`transform transition-all duration-1000 delay-300 ${
-              isVisible
-                ? "translate-y-0 opacity-100"
-                : "translate-y-10 opacity-0"
+              isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
             }`}
           >
             <h1
@@ -120,9 +121,7 @@ export default function Hero() {
           {/* Tagline */}
           <div
             className={`transform transition-all duration-1000 delay-500 ${
-              isVisible
-                ? "translate-y-0 opacity-100"
-                : "translate-y-10 opacity-0"
+              isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
             }`}
           >
             <div
@@ -140,9 +139,7 @@ export default function Hero() {
           {/* Location */}
           <div
             className={`flex items-center justify-center text-slate-400 mb-8 transform transition-all duration-1000 delay-700 ${
-              isVisible
-                ? "translate-y-0 opacity-100"
-                : "translate-y-10 opacity-0"
+              isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
             }`}
           >
             <MapPin className="w-4 h-4 mr-2 animate-pulse text-emerald-400" />
@@ -152,9 +149,7 @@ export default function Hero() {
           {/* Description */}
           <div
             className={`transform transition-all duration-1000 delay-900 ${
-              isVisible
-                ? "translate-y-0 opacity-100"
-                : "translate-y-10 opacity-0"
+              isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
             }`}
           >
             <p className="text-lg text-slate-300 max-w-2xl mx-auto mb-8 leading-relaxed">
@@ -165,9 +160,7 @@ export default function Hero() {
           {/* Action Buttons */}
           <div
             className={`flex flex-col sm:flex-row gap-4 justify-center items-center mb-8 transform transition-all duration-1000 delay-1100 ${
-              isVisible
-                ? "translate-y-0 opacity-100"
-                : "translate-y-10 opacity-0"
+              isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
             } ${language === "ar" ? "sm:flex-row-reverse" : ""}`}
           >
             <Button
@@ -191,20 +184,14 @@ export default function Hero() {
           {/* Social Links */}
           <div
             className={`flex justify-center space-x-6 transform transition-all duration-1000 delay-1300 ${
-              isVisible
-                ? "translate-y-0 opacity-100"
-                : "translate-y-10 opacity-0"
+              isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
             } ${language === "ar" ? "space-x-reverse" : ""}`}
           >
             {/* Email */}
             <a
               onClick={() => {
                 analytics?.trackButtonClick("hero-email");
-                window.open(
-                  `mailto:${content?.personalInfo.email || "hayouniamine11@gmail.com"}`,
-                  "_blank",
-                  "noopener,noreferrer"
-                );
+                window.open(emailUrl, "_blank", "noopener,noreferrer");
               }}
               className="p-3 rounded-full bg-slate-800 shadow-lg text-slate-400 hover:text-emerald-400 hover:shadow-xl transform hover:scale-110 transition-all duration-300 border border-slate-700 hover:border-emerald-400/50 cursor-pointer"
             >
@@ -215,11 +202,7 @@ export default function Hero() {
             <a
               onClick={() => {
                 analytics?.trackButtonClick("hero-github");
-                window.open(
-                  content?.personalInfo.github || "https://github.com/Hayouniiamine",
-                  "_blank",
-                  "noopener,noreferrer"
-                );
+                window.open(githubUrl, "_blank", "noopener,noreferrer");
               }}
               className="p-3 rounded-full bg-slate-800 shadow-lg text-slate-400 hover:text-emerald-400 hover:shadow-xl transform hover:scale-110 transition-all duration-300 border border-slate-700 hover:border-emerald-400/50 cursor-pointer"
             >
@@ -230,20 +213,6 @@ export default function Hero() {
             <a
               onClick={() => {
                 analytics?.trackButtonClick("hero-linkedin");
-                window.open(
-                  content?.personalInfo.linkedin ||
-                    "https://www.linkedin.com/in/amin-hayouni-419482351/",
-                  "_blank",
-                  "noopener,noreferrer"
-                );
+                window.open(linkedinUrl, "_blank", "noopener,noreferrer");
               }}
-              className="p-3 rounded-full bg-slate-800 shadow-lg text-slate-400 hover:text-emerald-400 hover:shadow-xl transform hover:scale-110 transition-all duration-300 border border-slate-700 hover:border-emerald-400/50 cursor-pointer"
-            >
-              <Linkedin className="w-6 h-6" />
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
+              className="p-3 rounded-full bg-slate-800 shadow-lg text-slate-
