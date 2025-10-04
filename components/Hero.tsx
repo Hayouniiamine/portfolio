@@ -155,14 +155,14 @@ export default function Hero() {
               <Mail className="w-6 h-6" />
             </a>
             <a
-              href={content?.personalInfo.github || "#"}
+              href={content?.personalInfo.github || "https://github.com/Hayouniiamine"}
               onClick={() => analytics?.trackButtonClick("hero-github")}
               className="p-3 rounded-full bg-slate-800 shadow-lg text-slate-400 hover:text-emerald-400 hover:shadow-xl transform hover:scale-110 transition-all duration-300 border border-slate-700 hover:border-emerald-400/50"
             >
               <Github className="w-6 h-6" />
             </a>
             <a
-              href={content?.personalInfo.linkedin || "#"}
+              href={content?.personalInfo.linkedin || "https://www.linkedin.com/in/amin-hayouni-419482351/"}
               onClick={() => analytics?.trackButtonClick("hero-linkedin")}
               className="p-3 rounded-full bg-slate-800 shadow-lg text-slate-400 hover:text-emerald-400 hover:shadow-xl transform hover:scale-110 transition-all duration-300 border border-slate-700 hover:border-emerald-400/50"
             >

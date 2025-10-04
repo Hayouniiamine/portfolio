@@ -11,7 +11,6 @@ const cairo = Cairo({ subsets: ["arabic"] })
 export const metadata: Metadata = {
   title: "Amine Hayouni - Full-stack AI Developer",
   description: "Portfolio of Amine Hayouni, a passionate full-stack AI developer and Computer Science student.",
-    generator: 'v0.dev'
 }
 
 export default function RootLayout({
