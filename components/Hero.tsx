@@ -1,53 +1,62 @@
-"use client"
+"use client";
 
-import Image from "next/image"
-import { Button } from "@/components/ui/button"
-import { Github, Linkedin, Mail, MapPin, Code, Database, Brain, Sparkles } from "lucide-react"
-import { useEffect, useState } from "react"
-import { useLanguage } from "@/lib/language-context"
-import { analytics } from "@/lib/analytics"
-import { contentManager } from "@/lib/content-manager"
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import {
+  Github,
+  Linkedin,
+  Mail,
+  MapPin,
+  Code,
+  Database,
+  Brain,
+  Sparkles,
+} from "lucide-react";
+import { useEffect, useState } from "react";
+import { useLanguage } from "@/lib/language-context";
+import { analytics } from "@/lib/analytics";
+import { contentManager } from "@/lib/content-manager";
 
 export default function Hero() {
-  const [isVisible, setIsVisible] = useState(false)
-  const { t, language } = useLanguage()
-  const [content, setContent] = useState<any>(null)
+  const [isVisible, setIsVisible] = useState(false);
+  const { t, language } = useLanguage();
+  const [content, setContent] = useState<any>(null);
 
   useEffect(() => {
-    setIsVisible(true)
-    analytics?.trackSectionView("hero")
+    setIsVisible(true);
+    analytics?.trackSectionView("hero");
 
     // Initialize content
-    const manager = contentManager
+    const manager = contentManager;
     if (manager) {
-      setContent(manager.getContent(language))
+      setContent(manager.getContent(language));
     }
 
     // Update content when it changes
     const updateContent = () => {
-      const manager = contentManager
+      const manager = contentManager;
       if (manager) {
-        setContent(manager.getContent(language))
+        setContent(manager.getContent(language));
       }
-    }
+    };
 
     // Listen for storage changes and language changes
-    window.addEventListener("storage", updateContent)
-    window.addEventListener("contentUpdated", updateContent)
+    window.addEventListener("storage", updateContent);
+    window.addEventListener("contentUpdated", updateContent);
 
     return () => {
-      window.removeEventListener("storage", updateContent)
-      window.removeEventListener("contentUpdated", updateContent)
-    }
-  }, [language])
+      window.removeEventListener("storage", updateContent);
+      window.removeEventListener("contentUpdated", updateContent);
+    };
+  }, [language]);
 
   const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId)
+    const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" })
-      analytics?.trackButtonClick(`hero-${sectionId}`)
+      element.scrollIntoView({ behavior: "smooth" });
+      analytics?.trackButtonClick(`hero-${sectionId}`);
     }
-  }
+  };
 
   return (
     <section
@@ -72,7 +81,11 @@ export default function Hero() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
         <div className="text-center">
           <div
-            className={`mb-8 transform transition-all duration-1000 ${isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}`}
+            className={`mb-8 transform transition-all duration-1000 ${
+              isVisible
+                ? "translate-y-0 opacity-100"
+                : "translate-y-10 opacity-0"
+            }`}
           >
             <div className="relative inline-block">
               <div className="absolute inset-0 bg-gradient-to-r from-emerald-400 to-cyan-400 rounded-full blur-lg opacity-30 animate-pulse"></div>
@@ -88,19 +101,33 @@ export default function Hero() {
           </div>
 
           <div
-            className={`transform transition-all duration-1000 delay-300 ${isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}`}
+            className={`transform transition-all duration-1000 delay-300 ${
+              isVisible
+                ? "translate-y-0 opacity-100"
+                : "translate-y-10 opacity-0"
+            }`}
           >
             <h1
-              className={`text-4xl md:text-6xl font-bold bg-gradient-to-r from-white via-emerald-200 to-cyan-200 bg-clip-text text-transparent mb-6 animate-gradient hero-name ${language === "ar" ? "mb-8" : "mb-4"}`}
+              className={`text-4xl md:text-6xl font-bold bg-gradient-to-r from-white via-emerald-200 to-cyan-200 bg-clip-text text-transparent mb-6 animate-gradient hero-name ${
+                language === "ar" ? "mb-8" : "mb-4"
+              }`}
             >
               {content?.personalInfo.name || t("name")}
             </h1>
           </div>
 
           <div
-            className={`transform transition-all duration-1000 delay-500 ${isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}`}
+            className={`transform transition-all duration-1000 delay-500 ${
+              isVisible
+                ? "translate-y-0 opacity-100"
+                : "translate-y-10 opacity-0"
+            }`}
           >
-            <div className={`relative inline-block ${language === "ar" ? "mb-8" : "mb-6"}`}>
+            <div
+              className={`relative inline-block ${
+                language === "ar" ? "mb-8" : "mb-6"
+              }`}
+            >
               <p className="text-xl md:text-2xl text-emerald-300 font-medium">
                 {content?.personalInfo.tagline || t("tagline")}
               </p>
@@ -109,14 +136,22 @@ export default function Hero() {
           </div>
 
           <div
-            className={`flex items-center justify-center text-slate-400 mb-8 transform transition-all duration-1000 delay-700 ${isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}`}
+            className={`flex items-center justify-center text-slate-400 mb-8 transform transition-all duration-1000 delay-700 ${
+              isVisible
+                ? "translate-y-0 opacity-100"
+                : "translate-y-10 opacity-0"
+            }`}
           >
             <MapPin className="w-4 h-4 mr-2 animate-pulse text-emerald-400" />
             <span>{content?.personalInfo.location || t("location")}</span>
           </div>
 
           <div
-            className={`transform transition-all duration-1000 delay-900 ${isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}`}
+            className={`transform transition-all duration-1000 delay-900 ${
+              isVisible
+                ? "translate-y-0 opacity-100"
+                : "translate-y-10 opacity-0"
+            }`}
           >
             <p className="text-lg text-slate-300 max-w-2xl mx-auto mb-8 leading-relaxed">
               {content?.personalInfo.heroDescription || t("heroDescription")}
@@ -124,7 +159,11 @@ export default function Hero() {
           </div>
 
           <div
-            className={`flex flex-col sm:flex-row gap-4 justify-center items-center mb-8 transform transition-all duration-1000 delay-1100 ${isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"} ${language === "ar" ? "sm:flex-row-reverse" : ""}`}
+            className={`flex flex-col sm:flex-row gap-4 justify-center items-center mb-8 transform transition-all duration-1000 delay-1100 ${
+              isVisible
+                ? "translate-y-0 opacity-100"
+                : "translate-y-10 opacity-0"
+            } ${language === "ar" ? "sm:flex-row-reverse" : ""}`}
           >
             <Button
               onClick={() => scrollToSection("projects")}
@@ -145,26 +184,44 @@ export default function Hero() {
           </div>
 
           <div
-            className={`flex justify-center space-x-6 transform transition-all duration-1000 delay-1300 ${isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"} ${language === "ar" ? "space-x-reverse" : ""}`}
+            className={`flex justify-center space-x-6 transform transition-all duration-1000 delay-1300 ${
+              isVisible
+                ? "translate-y-0 opacity-100"
+                : "translate-y-10 opacity-0"
+            } ${language === "ar" ? "space-x-reverse" : ""}`}
           >
             <a
-              href={`mailto:${content?.personalInfo.email || "hayouniamine11@gmail.com"}`}
+              href={`mailto:${
+                content?.personalInfo.email || "hayouniamine11@gmail.com"
+              }`}
               onClick={() => analytics?.trackButtonClick("hero-email")}
               className="p-3 rounded-full bg-slate-800 shadow-lg text-slate-400 hover:text-emerald-400 hover:shadow-xl transform hover:scale-110 transition-all duration-300 border border-slate-700 hover:border-emerald-400/50"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               <Mail className="w-6 h-6" />
             </a>
             <a
-              href={content?.personalInfo.github || "https://github.com/Hayouniiamine"}
+              href={
+                content?.personalInfo.github ||
+                "https://github.com/Hayouniiamine"
+              }
               onClick={() => analytics?.trackButtonClick("hero-github")}
               className="p-3 rounded-full bg-slate-800 shadow-lg text-slate-400 hover:text-emerald-400 hover:shadow-xl transform hover:scale-110 transition-all duration-300 border border-slate-700 hover:border-emerald-400/50"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               <Github className="w-6 h-6" />
             </a>
             <a
-              href={content?.personalInfo.linkedin || "https://www.linkedin.com/in/amin-hayouni-419482351/"}
+              href={
+                content?.personalInfo.linkedin ||
+                "https://www.linkedin.com/in/amin-hayouni-419482351/"
+              }
               onClick={() => analytics?.trackButtonClick("hero-linkedin")}
               className="p-3 rounded-full bg-slate-800 shadow-lg text-slate-400 hover:text-emerald-400 hover:shadow-xl transform hover:scale-110 transition-all duration-300 border border-slate-700 hover:border-emerald-400/50"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               <Linkedin className="w-6 h-6" />
             </a>
@@ -172,5 +229,5 @@ export default function Hero() {
         </div>
       </div>
     </section>
-  )
+  );
 }
