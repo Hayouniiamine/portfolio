@@ -3,7 +3,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Download, Briefcase, GraduationCap, Code, Globe } from "lucide-react"
+import { Download, GraduationCap, Code, Globe } from "lucide-react"
 import { useEffect, useState } from "react"
 import { useLanguage } from "@/lib/language-context"
 import { analytics } from "@/lib/analytics"
@@ -34,7 +34,7 @@ export default function Resume() {
 
   const handleDownload = () => {
     analytics?.trackButtonClick("download-resume")
-    alert("PDF download would be implemented here")
+    window.open("https://github.com/Hayouniiamine/cv/blob/main/Amine%20Hayounii.pdf", "_blank")
   }
 
   const languages = [
@@ -62,39 +62,7 @@ export default function Resume() {
           </Button>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
-          {/* Experience */}
-          <Card className="bg-slate-800 border-slate-700">
-            <CardHeader>
-              <CardTitle className="flex items-center text-white">
-                <Briefcase className="w-5 h-5 mr-2 text-emerald-400" />
-                {t("experience")}
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              {content?.experience?.map((exp, index) => (
-                <div key={index} className="mb-6 last:mb-0">
-                  <h3 className="font-semibold text-lg text-white">{exp.title}</h3>
-                  <p className="text-emerald-400 font-medium">{exp.company}</p>
-                  <p className="text-sm text-slate-400 mb-2">
-                    {exp.period} • {exp.location}
-                  </p>
-                  <ul className="list-disc list-inside space-y-1 text-slate-300">
-                    {Array.isArray(exp.description) ? (
-                      exp.description.map((item, itemIndex) => (
-                        <li key={itemIndex} className="text-sm">
-                          {item}
-                        </li>
-                      ))
-                    ) : (
-                      <li className="text-sm">{exp.description}</li>
-                    )}
-                  </ul>
-                </div>
-              ))}
-            </CardContent>
-          </Card>
-
+        <div className="grid grid-cols-1 gap-8 mb-12">
           {/* Education */}
           <Card className="bg-slate-800 border-slate-700">
             <CardHeader>
