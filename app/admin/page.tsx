@@ -28,6 +28,7 @@ import {
 } from "lucide-react"
 import { analytics } from "@/lib/analytics"
 import { contentManager, type Project, type Experience, type Education } from "@/lib/content-manager"
+import { validateAndProcessImgurLinks } from "@/lib/imgur-utils"
 
 interface Stats {
   sessionId: string
@@ -63,7 +64,6 @@ export default function AdminPage() {
     if (isAuthenticated) {
       const initializeData = async () => {
         try {
-          // Initialize analytics
           if (analytics) {
             const updateStats = () => {
               setStats(analytics.getStats())
@@ -72,7 +72,6 @@ export default function AdminPage() {
             updateStats()
             const interval = setInterval(updateStats, 5000)
 
-            // Initialize content manager
             const manager = getContentManager()
             if (manager) {
               setContent(manager.getAllContent())
@@ -82,7 +81,6 @@ export default function AdminPage() {
 
             return () => clearInterval(interval)
           } else {
-            // If analytics is not available, still load content
             const manager = getContentManager()
             if (manager) {
               setContent(manager.getAllContent())
@@ -292,7 +290,6 @@ export default function AdminPage() {
     )
   }
 
-  // Add fallback content if content is still null
   const currentContent = content?.[editingLanguage] || {
     personalInfo: {
       name: "Amine Hayouni",
@@ -324,7 +321,6 @@ export default function AdminPage() {
             <p className="text-slate-400">Portfolio management and analytics</p>
           </div>
           <div className="flex items-center gap-4">
-            {/* Language Selector */}
             <div className="flex items-center gap-2">
               <span className="text-slate-400 text-sm">Editing Language:</span>
               <select
@@ -371,7 +367,6 @@ export default function AdminPage() {
           <TabsContent value="analytics" className="space-y-6">
             {stats && (
               <>
-                {/* Overview Stats */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                   <Card className="bg-slate-800 border-slate-700">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -419,7 +414,6 @@ export default function AdminPage() {
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                  {/* Section Views */}
                   <Card className="bg-slate-800 border-slate-700">
                     <CardHeader>
                       <CardTitle className="text-white flex items-center">
@@ -441,7 +435,6 @@ export default function AdminPage() {
                     </CardContent>
                   </Card>
 
-                  {/* Button Clicks */}
                   <Card className="bg-slate-800 border-slate-700">
                     <CardHeader>
                       <CardTitle className="text-white flex items-center">
@@ -550,7 +543,6 @@ export default function AdminPage() {
               </CardContent>
             </Card>
 
-            {/* Skills Section */}
             <Card className="bg-slate-800 border-slate-700">
               <CardHeader>
                 <CardTitle className="text-white">Skills</CardTitle>
@@ -655,42 +647,48 @@ export default function AdminPage() {
                         </div>
                       </div>
 
-                      {/* Project Images Slideshow */}
+                      {/* Project Images */}
                       <div className="space-y-3 border-t border-slate-600 pt-4">
                         <Label className="text-slate-300 flex items-center gap-2">
                           <ImageIcon className="w-4 h-4" />
-                          Project Images (Up to 3 images for slideshow)
+                          Project Images (Up to 3 Imgur image links)
                         </Label>
                         <p className="text-xs text-slate-400">
-                          Enter image URLs separated by line breaks (max 3 images)
+                          Paste individual Imgur image links (e.g., https://imgur.com/abc123.jpg or
+                          https://i.imgur.com/abc123.jpg)
                         </p>
+
                         <Textarea
                           value={project.images?.join("\n") || ""}
-                          onChange={(e) =>
-                            handleProjectUpdate(
-                              project.id,
-                              "images",
-                              e.target.value
-                                .split("\n")
-                                .filter((img) => img.trim() !== "")
-                                .slice(0, 3),
-                            )
-                          }
+                          onChange={(e) => {
+                            const text = e.target.value
+                            const links = validateAndProcessImgurLinks(text)
+                            const uniqueLinks = Array.from(new Set(links)).slice(0, 3)
+                            handleProjectUpdate(project.id, "images", uniqueLinks)
+                          }}
                           className="bg-slate-700 border-slate-600 text-white font-mono text-sm"
                           rows={4}
-                          placeholder="https://example.com/image1.jpg
-https://example.com/image2.jpg
-https://example.com/image3.jpg"
+                          placeholder="https://imgur.com/abc123.jpg
+https://i.imgur.com/def456.jpg
+https://imgur.com/ghi789.png"
                         />
-                        <div className="bg-slate-700/50 p-3 rounded text-xs text-slate-300">
-                          <p className="font-medium mb-1">📝 Usage Tips:</p>
+
+                        <div className="bg-slate-700/50 p-3 rounded text-xs text-slate-300 space-y-2">
+                          <p className="font-medium">📝 How to use:</p>
                           <ul className="list-disc list-inside space-y-1">
-                            <li>Add image URLs one per line</li>
+                            <li>Paste Imgur image links one per line</li>
+                            <li>Supports both imgur.com and i.imgur.com links</li>
                             <li>Maximum 3 images per project</li>
-                            <li>Use direct image URLs (jpg, png, etc.)</li>
+                            <li>Links are automatically validated and formatted</li>
                             <li>Images will auto-rotate every 5 seconds</li>
                           </ul>
+                          <div className="bg-emerald-500/20 border border-emerald-500/50 rounded p-2 mt-2">
+                            <p className="text-emerald-400 text-xs font-medium">
+                              ✓ Valid Imgur links will be automatically processed
+                            </p>
+                          </div>
                         </div>
+
                         {project.images && project.images.length > 0 && (
                           <div className="space-y-2">
                             <p className="text-xs text-emerald-400">✓ {project.images.length} image(s) added</p>
@@ -705,6 +703,10 @@ https://example.com/image3.jpg"
                                       src={img || "/placeholder.svg"}
                                       alt={`Preview ${idx + 1}`}
                                       className="w-full h-full object-cover"
+                                      onError={(e) => {
+                                        e.currentTarget.style.display = "none"
+                                        e.currentTarget.parentElement!.innerHTML = `<span>${img}</span>`
+                                      }}
                                     />
                                   ) : (
                                     <span>Empty</span>
